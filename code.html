@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Gói Con Tim Làm Quà - Video Code Karaoke</title>
+  <style>
+    body {
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    /* 1. KHUNG CHỨA VIDEO BÊN TRÊN */
+    .video-box {
+      width: 100%;
+      max-width: 480px;
+      height: 250px;
+      background-color: #000;
+      border: 1px solid #30363d;
+      border-radius: 8px 8px 0 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Đảm bảo video hiển thị đẹp và vừa vặn */
+    .video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Cắt vừa khung hoặc dùng 'contain' nếu muốn giữ đúng tỷ lệ video gốc */
+    }
+
+    /* 2. KHUNG CHỨA CODE BÊN DƯỚI */
+    .code-box {
+      width: 100%;
+      max-width: 480px;
+      box-sizing: border-box;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 20px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .line {
+      opacity: 0.3;
+      transition: all 0.3s ease;
+      white-space: pre;
+    }
+
+    /* Dòng code sáng lên khi chạy đến lời */
+    .line.active {
+      opacity: 1;
+      color: #58a6ff;
+      font-weight: bold;
+      background-color: #161b22;
+    }
+
+    /* Nút kích hoạt */
+    button {
+      margin-bottom: 15px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background-color: #238636;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #2ea043;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="startBtn">▶ Bắt dầu</button>
+
+  <!-- PHẦN 1: KHUNG VIDEO PHÍA TRÊN -->
+  <div class="video-box">
+    <!-- Dùng thẻ <video> để phát file video.mp4 -->
+    <video id="myVideo" src="video.mp4" playsinline></video>
+  </div>
+
+  <!-- PHẦN 2: KHUNG CODE PHÍA DƯỚI -->
+  <div class="code-box">
+    <div class="line" id="line-1">async function goiConTim(em) {</div>
+    <div class="line" id="line-2">  const chanThanh = gather(20);</div>
+    <div class="line" id="line-3">  const moi = await doi(chanThanh);</div>
+    <div class="line" id="line-4">  if (!em.dongY) return cho();</div>
+    <div class="line" id="line-5"></div>
+    <div class="line" id="line-6">  const hoa = await em.trao("hoa");</div>
+    <div class="line" id="line-7">  const qua = goi(conTim, hoa);</div>
+    <div class="line" id="line-8"></div>
+    <div class="line" id="line-9">  while (hoa.tanUa) {</div>
+    <div class="line" id="line-10">    qua.nhipDap += tick();</div>
+    <div class="line" id="line-11">  }</div>
+    <div class="line" id="line-12"></div>
+    <div class="line" id="line-13">  await em.veDay();</div>
+    <div class="line" id="line-14">  const tay = giu(em, chatHon);</div>
+    <div class="line" id="line-15">  if (cachRoi) return khong(tay);</div>
+    <div class="line" id="line-16">  return nangNiu(em, suotDoi);</div>
+    <div class="line" id="line-17">}</div>
+  </div>
+
+  <script>
+    // Lấy thẻ video và nhạc
+    const videoElement = document.getElementById('myVideo');
+    const audio = new Audio('music.mp3');
+
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    function highlight(lineId) {
+      document.querySelectorAll('.line').forEach(el => el.classList.remove('active'));
+      const line = document.getElementById(lineId);
+      if (line) line.classList.add('active');
+    }
+
+    // Các hàm giả lập
+    const gather = (val) => val;
+    const doi = async (val) => val;
+    const cho = () => "Chờ...";
+    const goi = (a, b) => ({ nhipDap: 0 });
+    const tick = () => 1;
+    const giu = (a, b) => "tay";
+    const khong = (a) => false;
+    const nangNiu = (a, b) => "Suốt đời";
+    let conTim = "tim", chatHon = true, cachRoi = false, suotDoi = true;
+
+    async function goiConTim(em) {
+      // 1. Đồng thời phát cả Video lẫn Nhạc
+      videoElement.currentTime = 0; // Đặt video về giây đầu tiên
+      videoElement.play();
+      audio.play();
+
+      // 2. Chạy hiệu ứng highlight từng dòng theo lời nhạc
+      highlight('line-1');
+      await sleep(1000);
+
+      highlight('line-2');
+      const chanThanh = gather(20);
+
+      await sleep(2500);
+      highlight('line-3');
+      const moi = await doi(chanThanh);
+
+      await sleep(3500);
+      highlight('line-4');
+      if (!em.dongY) return cho();
+
+      await sleep(7500);
+      highlight('line-6');
+      const hoa = await em.trao("hoa");
+
+      await sleep(3000);
+      highlight('line-7');
+      const qua = goi(conTim, hoa);
+
+      await sleep(3500);
+      highlight('line-9');
+
+      await sleep(2500);
+      highlight('line-10');
+      qua.nhipDap += tick();
+
+      await sleep(4000);
+      highlight('line-13');
+      await em.veDay();
+
+      await sleep(3500);
+      highlight('line-14');
+      const tay = giu(em, chatHon);
+
+      await sleep(3500);
+      highlight('line-15');
+      if (cachRoi) return khong(tay);
+
+      await sleep(3000);
+      highlight('line-16');
+      return nangNiu(em, suotDoi);
+    }
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      const emObj = {
+        dongY: true,
+        trao: async (item) => ({ name: item, tanUa: false }),
+        veDay: async () => true
+      };
+      goiConTim(emObj);
+    });
+  </script>
+</body>
+</html>
